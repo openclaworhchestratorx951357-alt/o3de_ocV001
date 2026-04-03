@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import sys
 from pathlib import Path
 
 BRIDGE_ROOT = Path(r"C:\Users\topgu\O3DEBridge")
@@ -18,6 +19,9 @@ REQUEST_TOOL_TO_HANDLER = {
 
 
 def load_module_from_path(module_name: str, path: Path):
+    parent = str(path.parent)
+    if parent not in sys.path:
+        sys.path.insert(0, parent)
     spec = importlib.util.spec_from_file_location(module_name, path)
     module = importlib.util.module_from_spec(spec)
     assert spec.loader is not None
