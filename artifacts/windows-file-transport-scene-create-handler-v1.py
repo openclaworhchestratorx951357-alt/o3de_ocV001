@@ -6,7 +6,8 @@ import json
 from datetime import datetime, timezone
 from pathlib import Path
 
-import azlmbr.legacy.general as general
+import azlmbr.bus as bus
+import azlmbr.editor as editor
 
 BRIDGE_ROOT = Path(r"C:\Users\topgu\O3DEBridge")
 INBOX = BRIDGE_ROOT / "inbox"
@@ -14,7 +15,7 @@ OUTBOX = BRIDGE_ROOT / "outbox"
 ARCHIVE = BRIDGE_ROOT / "archive"
 ALLOWED_PROJECT_ID = "McpSandbox"
 ALLOWED_SCENE_NAME = "BridgeLevel01"
-ALLOWED_TEMPLATE = "DefaultLevelPrefab"
+ALLOWED_TEMPLATE = "Prefabs/Default_Level.prefab"
 SUCCESS_RESULT = 0
 
 
@@ -77,7 +78,7 @@ def build_response(request: dict[str, object]) -> dict[str, object]:
     if template != ALLOWED_TEMPLATE:
         return error_response(request_id=request_id, code='INVALID_REQUEST', message=f'Initial live scene_create is restricted to template={ALLOWED_TEMPLATE}', target='template')
 
-    result_code = general.create_level_no_prompt(ALLOWED_TEMPLATE, ALLOWED_SCENE_NAME, 1024, 1, False)
+    result_code = editor.EditorToolsApplicationRequestBus(bus.Broadcast, 'CreateLevelNoPrompt', ALLOWED_TEMPLATE, ALLOWED_SCENE_NAME, 1024, False)
     created = result_code == SUCCESS_RESULT
 
     return {

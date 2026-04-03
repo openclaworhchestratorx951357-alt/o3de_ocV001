@@ -7,7 +7,7 @@ Run the first narrow approval-gated live `scene_create` proof.
 This first handler is intentionally restricted to:
 - `project_id == "McpSandbox"`
 - `scene_name == "BridgeLevel01"`
-- `template == "DefaultLevelPrefab"`
+- `template == "Prefabs/Default_Level.prefab"`
 - non-empty `approval_token`
 - no terrain
 
@@ -21,7 +21,7 @@ This first handler is intentionally restricted to:
 ## Expected behavior
 - typed request envelope required
 - approval token required
-- invokes `general.create_level_no_prompt(...)`
+- invokes `EditorToolsApplicationRequestBus(..., 'CreateLevelNoPrompt', ...)`
 - treats result code `0` as success
 - returns structured response
 

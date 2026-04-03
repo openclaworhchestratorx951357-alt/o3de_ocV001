@@ -22,7 +22,7 @@ DEFAULT_REQUEST_PREFIX = "scene-create-roundtrip"
 DEFAULT_APPROVAL_TOKEN = "approved-scene-create-v1"
 DEFAULT_PROJECT_ID = "McpSandbox"
 DEFAULT_SCENE_NAME = "BridgeLevel01"
-DEFAULT_TEMPLATE = "DefaultLevelPrefab"
+DEFAULT_TEMPLATE = "Prefabs/Default_Level.prefab"
 
 
 def make_request_id(prefix: str = DEFAULT_REQUEST_PREFIX) -> str:
