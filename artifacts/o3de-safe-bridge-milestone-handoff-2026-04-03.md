@@ -136,6 +136,35 @@ Resolved live result:
 
 This resolves the original persistence uncertainty.
 
+### 5.6 `entity_create` live round-trip and verification
+Proven through a narrow approval-gated mutation path.
+
+What was shown:
+- typed request envelope consumed correctly
+- approval token requirement enforced
+- entity `bridge_entity_01` created in `TestLoevel01`
+- requested components `Camera` and `Mesh` added successfully
+- structured response returned correctly
+- follow-up validation probe confirmed `bridge_entity_01` exists and has both Camera and Mesh components
+
+### 5.7 `scene_save` live round-trip
+Proven through a narrow approval-gated save path.
+
+What was shown:
+- typed request envelope consumed correctly
+- approval token requirement enforced
+- current validated scene `TestLoevel01` saved successfully via editor-native save surface
+- structured response returned correctly
+
+### 5.8 `scene_create` live round-trip
+Proven through a narrow approval-gated creation path.
+
+What was shown:
+- first attempt against `general.create_level_no_prompt(...)` failed with `result=None`, which exposed a binding/runtime mismatch rather than a capability gap
+- direct probe confirmed the working creation surface is `EditorToolsApplicationRequestBus(..., 'CreateLevelNoPrompt', ...)`
+- after retargeting to the working editor API and the real template path `Prefabs/Default_Level.prefab`, live creation of `BridgeLevel01` succeeded with result code `0`
+- structured response returned correctly
+
 ---
 
 ## 6. Phase 0 closeout status

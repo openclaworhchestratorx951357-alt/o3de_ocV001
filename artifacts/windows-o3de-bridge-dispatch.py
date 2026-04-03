@@ -46,7 +46,6 @@ def read_newest_request_tool_name() -> str | None:
 def main() -> None:
     tool_name = read_newest_request_tool_name()
     if tool_name is None:
-        print('No typed request files found in inbox.')
         return
 
     handler_filename = REQUEST_TOOL_TO_HANDLER.get(tool_name)
