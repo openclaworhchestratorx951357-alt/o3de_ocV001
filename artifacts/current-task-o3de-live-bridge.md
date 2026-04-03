@@ -1,29 +1,31 @@
-# Current Task — O3DE Live Bridge Bring-up
+# Current Task — O3DE Bridge Consolidation
 
 ## Objective
-Build toward the first real safe end-to-end O3DE control loop from OpenClaw/WSL to the Windows-native O3DE editor.
+Consolidate the now-live-proven safe bridge into a cleaner, less conflicting, more maintainable working baseline before moving deeper into MCP-layer work.
 
 ## Active milestone
-Milestone A: first live bridge proof.
+Milestone B: post-bring-up bridge cleanup and roadmap reset.
 
 ## Immediate subgoals
-1. Verify and document the approved bridge scaffold currently on disk.
-2. Materialize the approved scaffold into a working source tree inside the workspace so implementation can continue from real package files instead of artifact-only copies.
-3. Normalize the copied approved bridge source files into runnable Python so the test suite can collect.
-4. Generate/approve the next narrow bridge runtime files needed for dispatch/runtime proof.
-5. Prepare a Windows-side bridge probe plan for Python Editor Bindings.
+1. Replace bring-up-centered planning with a post-proof working roadmap.
+2. Treat the live-proven six-tool surface as the baseline, not as a future goal.
+3. Reduce confusion from older speculative plans that are now superseded.
+4. Identify which current handlers/probes remain reference/debug assets versus which logic should migrate into reusable bridge runtime modules.
+5. Keep Dropbox checkpointing of important artifacts as a standard workflow step.
 
 ## Current milestone focus
-- Local bridge skeleton is runnable and passing tests.
-- Windows-side generic Python execution and O3DE-aware read-only probe execution have been proven in the live editor environment.
-- First manual file-transport round-trip has been completed successfully.
-- Canonical typed `project_scan` round-trip has now been repeated successfully with the v3 handler.
-- A second clean repeatability run from empty inbox/outbox has now succeeded end-to-end.
-- First narrow approval-gated live `scene_open` proof has now succeeded end-to-end against the verified saved level name.
-- Next action: decide whether to validate current open-level state more deeply or move to the next low-risk live operation.
+- The approved six-tool surface is now live-proven:
+  - `project_scan`
+  - `scene_open`
+  - `scene_create`
+  - `entity_create`
+  - `scene_save`
+  - `scene_validate`
+- The working setup is now known and should be treated as canonical.
+- Next action: clean the planning center, reduce implementation sprawl, and consolidate the bridge runtime around the proven path.
 
 ## Notes
 - Persist progress here and in dated memory as work advances.
-- Do not assume Windows editor-side binding availability until verified.
-- Keep implementation narrow and reviewable.
-- Transport hardening note: the shared Windows bridge directories previously contained legacy files from earlier handler attempts (`windows-project-scan-request-001.json`, prior response files, and `unknown-request.response.json`). These have now been archived so inbox/outbox are clean again for the next repeatability check.
+- Keep the bridge narrow, typed, approval-aware, and reviewable.
+- Do not let older pre-proof planning artifacts continue to steer current execution.
+- Dropbox checkpointing of important/successful artifacts is now part of the normal workflow.
