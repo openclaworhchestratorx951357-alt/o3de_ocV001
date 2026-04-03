@@ -31,6 +31,13 @@ Printed message like:
 You should not need to manually run the dispatcher for each request.
 Instead, you stage requests from WSL/OpenClaw and the installed timer should pick them up automatically.
 
+## Status file
+The bootstrap also writes lightweight status to:
+- `C:\Users\topgu\O3DEBridge\bootstrap-status.json`
+
+This is useful for checking whether the bootstrap believes it is installed and what dispatch path/poll interval it is using.
+
 ## Notes
 - this is the first safe bootstrap version, not the final polished persistent bridge
-- if needed, the script exposes `install()`, `uninstall()`, and `status()` functions for later refinement
+- the script exposes `install()`, `uninstall()`, and `status()` functions
+- restart of the O3DE editor still requires reinstalling the bootstrap unless a startup hook is added later
