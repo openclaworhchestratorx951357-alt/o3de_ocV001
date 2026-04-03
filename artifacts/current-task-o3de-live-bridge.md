@@ -19,7 +19,8 @@ Milestone A: first live bridge proof.
 - First manual file-transport round-trip has been completed successfully.
 - Canonical typed `project_scan` round-trip has now been repeated successfully with the v3 handler.
 - A second clean repeatability run from empty inbox/outbox has now succeeded end-to-end.
-- Next action: decide the next low-risk live operation.
+- First narrow approval-gated live `scene_open` proof has now succeeded end-to-end against the verified saved level name.
+- Next action: decide whether to validate current open-level state more deeply or move to the next low-risk live operation.
 
 ## Notes
 - Persist progress here and in dated memory as work advances.
