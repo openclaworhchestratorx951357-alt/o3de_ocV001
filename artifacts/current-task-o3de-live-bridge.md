@@ -18,7 +18,8 @@ Milestone A: first live bridge proof.
 - Windows-side generic Python execution and O3DE-aware read-only probe execution have been proven in the live editor environment.
 - First manual file-transport round-trip has been completed successfully.
 - Canonical typed `project_scan` round-trip has now been repeated successfully with the v3 handler.
-- Next action: clean remaining legacy transport debris, then decide the next low-risk live operation.
+- A second clean repeatability run from empty inbox/outbox has now succeeded end-to-end.
+- Next action: decide the next low-risk live operation.
 
 ## Notes
 - Persist progress here and in dated memory as work advances.
