@@ -17,9 +17,11 @@ Milestone A: first live bridge proof.
 - Local bridge skeleton is runnable and passing tests.
 - Windows-side generic Python execution and O3DE-aware read-only probe execution have been proven in the live editor environment.
 - First manual file-transport round-trip has been completed successfully.
-- Next action: make the `project_scan` file-transport loop repeatable and tidier, then decide the next low-risk live operation.
+- Canonical typed `project_scan` round-trip has now been repeated successfully with the v3 handler.
+- Next action: clean remaining legacy transport debris, then decide the next low-risk live operation.
 
 ## Notes
 - Persist progress here and in dated memory as work advances.
 - Do not assume Windows editor-side binding availability until verified.
 - Keep implementation narrow and reviewable.
+- Transport hardening note: the shared Windows bridge directories still contain legacy files from earlier handler attempts (`windows-project-scan-request-001.json`, prior response files, and `unknown-request.response.json`). Clean or archive these before future repeatability checks so the newest-request rule stays deterministic.
