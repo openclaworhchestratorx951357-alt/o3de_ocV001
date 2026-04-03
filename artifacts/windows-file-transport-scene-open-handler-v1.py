@@ -23,7 +23,7 @@ INBOX = BRIDGE_ROOT / "inbox"
 OUTBOX = BRIDGE_ROOT / "outbox"
 ARCHIVE = BRIDGE_ROOT / "archive"
 ALLOWED_PROJECT_ID = "McpSandbox"
-ALLOWED_SCENE_NAME = "TestLevel01"
+ALLOWED_SCENE_NAME = "TestLoevel01"
 
 
 def newest_request_file() -> Path | None:
