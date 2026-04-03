@@ -24,4 +24,4 @@ Milestone A: first live bridge proof.
 - Persist progress here and in dated memory as work advances.
 - Do not assume Windows editor-side binding availability until verified.
 - Keep implementation narrow and reviewable.
-- Transport hardening note: the shared Windows bridge directories still contain legacy files from earlier handler attempts (`windows-project-scan-request-001.json`, prior response files, and `unknown-request.response.json`). Clean or archive these before future repeatability checks so the newest-request rule stays deterministic.
+- Transport hardening note: the shared Windows bridge directories previously contained legacy files from earlier handler attempts (`windows-project-scan-request-001.json`, prior response files, and `unknown-request.response.json`). These have now been archived so inbox/outbox are clean again for the next repeatability check.
