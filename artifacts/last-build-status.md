@@ -1,0 +1,11 @@
+# Last Build Status
+- program: O3DE MCP Build Program
+- current phase: next approved expansion after narrow mutation layer
+- latest completed step: explicit selection of `entity_find` as the next approved expansion after the completed narrow mutation layer
+- current active artifact: `artifacts/next-approved-expansion.md`
+- current objective: implement bridge-side typed request/response support for `entity_find`
+- next artifact after current: bridge-side `entity_find` implementation and proof shape
+- local pytest remains a non-blocking environment issue: `python3 -m pytest ...` fails with `No module named pytest`
+- blocker: local environment issue — local pytest execution remains unavailable (`python3 -m pytest ...` fails with `No module named pytest`); code and proof files updated successfully, test execution remains pending environment availability
+- operating rule: execute → verify → report
+- stop condition: do not stop at acknowledgement; only stop at completed artifact, exact blocker, or next artifact started

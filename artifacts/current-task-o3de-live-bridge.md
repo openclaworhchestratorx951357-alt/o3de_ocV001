@@ -1,31 +1,20 @@
-# Current Task — O3DE Bridge Consolidation
+# Current Task — O3DE Live Bridge / MCP Preparation
 
-## Objective
-Consolidate the now-live-proven safe bridge into a cleaner, less conflicting, more maintainable working baseline before moving deeper into MCP-layer work.
+## Current focus
+Build the control artifacts that convert the proven six-tool live bridge into a capability-discovered, domain-based MCP v1.
 
-## Active milestone
-Milestone B: post-bring-up bridge cleanup and roadmap reset.
+## Right now
+- active artifact: `entity_find`
+- immediate next artifact: bridge-side typed request/response implementation and proof shape for `entity_find`
 
-## Immediate subgoals
-1. Replace bring-up-centered planning with a post-proof working roadmap.
-2. Treat the live-proven six-tool surface as the baseline, not as a future goal.
-3. Reduce confusion from older speculative plans that are now superseded.
-4. Identify which current handlers/probes remain reference/debug assets versus which logic should migrate into reusable bridge runtime modules.
-5. Keep Dropbox checkpointing of important artifacts as a standard workflow step.
+## Current execution requirements
+- narrow mutation layer is complete enough to count as finished for: `component_add`, `entity_rename`, `entity_set_transform`, `mesh_set_model_asset`
+- stable entity identifiers must remain primary
+- mutation safety and allowlist boundaries must remain explicit in typed request/response structures
+- `entity_find` is the explicitly selected next approved expansion and must follow the same typed/proved rollout pattern
+- preserve approval-aware semantics and typed request/response design
+- local pytest remains a non-blocking environment issue until the environment provides pytest
 
-## Current milestone focus
-- The approved six-tool surface is now live-proven:
-  - `project_scan`
-  - `scene_open`
-  - `scene_create`
-  - `entity_create`
-  - `scene_save`
-  - `scene_validate`
-- The working setup is now known and should be treated as canonical.
-- Next action: clean the planning center, reduce implementation sprawl, and consolidate the bridge runtime around the proven path.
-
-## Notes
-- Persist progress here and in dated memory as work advances.
-- Keep the bridge narrow, typed, approval-aware, and reviewable.
-- Do not let older pre-proof planning artifacts continue to steer current execution.
-- Dropbox checkpointing of important/successful artifacts is now part of the normal workflow.
+## After this file work
+Implement `entity_find` bridge-side request/response and proof shape.
+Do not stop at status-only updates.
