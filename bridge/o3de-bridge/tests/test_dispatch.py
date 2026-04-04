@@ -16,6 +16,8 @@ from o3de_bridge.models import (
     EntityFindRequest,
     EntityFindResponse,
     EntityGetRequest,
+    EntityListRequest,
+    EntityListResponse,
     EntityGetResponse,
     EntityRenameRequest,
     EntityRenameResponse,
@@ -335,10 +337,80 @@ def test_dispatch_entity_find_rejects_invalid_request_shape() -> None:
     assert exc_info.value.target == "request_model"
 
 
+def test_dispatch_entity_list_returns_typed_response_for_scene_scope() -> None:
+    request = EntityListRequest(
+        meta=RequestMeta(
+            request_id="req-3019",
+            tool_name="entity_list",
+            dry_run=False,
+            approval_token=None,
+            timestamp="2026-04-04T08:40:00Z",
+        ),
+        project_id="McpSandbox",
+        scene_name="TestLevel01",
+        scope="scene",
+        limit=10,
+    )
+
+    result = dispatch("entity_list", request)
+
+    assert isinstance(result, EntityListResponse)
+    assert result.tool_name == "entity_list"
+    assert result.data.scope == "scene"
+    assert result.data.total_entities == 3
+    assert result.data.entities[0].entity_id == "entity-001"
+    assert result.data.entities[1].parent_entity_id == "entity-001"
+    assert result.requires_approval is False
+    assert result.approval_level == "none"
+
+
+def test_dispatch_entity_list_returns_typed_response_for_root_scope() -> None:
+    request = EntityListRequest(
+        meta=RequestMeta(
+            request_id="req-3020",
+            tool_name="entity_list",
+            dry_run=False,
+            approval_token=None,
+            timestamp="2026-04-04T08:41:00Z",
+        ),
+        project_id="McpSandbox",
+        scene_name="TestLevel01",
+        scope="root_only",
+        limit=10,
+    )
+
+    result = dispatch("entity_list", request)
+
+    assert isinstance(result, EntityListResponse)
+    assert result.tool_name == "entity_list"
+    assert result.data.scope == "root_only"
+    assert result.data.total_entities == 1
+    assert result.data.entities[0].depth == 0
+
+
+def test_dispatch_entity_list_rejects_invalid_request_shape() -> None:
+    request = ProjectScanRequest(
+        meta=RequestMeta(
+            request_id="req-3021",
+            tool_name="entity_list",
+            dry_run=False,
+            approval_token=None,
+            timestamp=None,
+        ),
+        project_id="McpSandbox",
+    )
+
+    with pytest.raises(BridgeValidationError) as exc_info:
+        dispatch("entity_list", request)
+
+    assert exc_info.value.code == INVALID_REQUEST
+    assert exc_info.value.target == "request_model"
+
+
 def test_dispatch_asset_search_returns_typed_response() -> None:
     request = AssetSearchRequest(
         meta=RequestMeta(
-            request_id="req-3015",
+            request_id="req-3022",
             tool_name="asset_search",
             dry_run=False,
             approval_token=None,
@@ -363,7 +435,7 @@ def test_dispatch_asset_search_returns_typed_response() -> None:
 def test_dispatch_asset_resolve_returns_typed_response() -> None:
     request = AssetResolveRequest(
         meta=RequestMeta(
-            request_id="req-3016",
+            request_id="req-3023",
             tool_name="asset_resolve",
             dry_run=False,
             approval_token=None,
@@ -387,7 +459,7 @@ def test_dispatch_asset_resolve_returns_typed_response() -> None:
 def test_dispatch_asset_search_rejects_invalid_request_shape() -> None:
     request = ProjectScanRequest(
         meta=RequestMeta(
-            request_id="req-3017",
+            request_id="req-3024",
             tool_name="asset_search",
             dry_run=False,
             approval_token=None,
@@ -406,7 +478,7 @@ def test_dispatch_asset_search_rejects_invalid_request_shape() -> None:
 def test_dispatch_asset_resolve_rejects_invalid_request_shape() -> None:
     request = ProjectScanRequest(
         meta=RequestMeta(
-            request_id="req-3018",
+            request_id="req-3025",
             tool_name="asset_resolve",
             dry_run=False,
             approval_token=None,

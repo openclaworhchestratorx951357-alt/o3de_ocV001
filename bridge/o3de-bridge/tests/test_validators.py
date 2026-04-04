@@ -15,6 +15,7 @@ from o3de_bridge.models import (
     EntityCreateRequest,
     EntityFindQuery,
     EntityFindRequest,
+    EntityListRequest,
     ProjectScanRequest,
     RequestMeta,
     SceneOpenRequest,
@@ -260,13 +261,49 @@ def test_validate_request_model_accepts_entity_find_with_entity_id_query() -> No
     validate_request_model("entity_find", request)
 
 
+def test_validate_request_model_accepts_entity_list_with_scene_scope() -> None:
+    request = EntityListRequest(
+        meta=RequestMeta(
+            request_id="req-2011",
+            tool_name="entity_list",
+            dry_run=False,
+            approval_token=None,
+            timestamp=None,
+        ),
+        project_id="McpSandbox",
+        scene_name="TestLevel01",
+        scope="scene",
+        limit=50,
+    )
+
+    validate_request_model("entity_list", request)
+
+
+def test_validate_request_model_accepts_entity_list_with_root_scope() -> None:
+    request = EntityListRequest(
+        meta=RequestMeta(
+            request_id="req-2012",
+            tool_name="entity_list",
+            dry_run=False,
+            approval_token=None,
+            timestamp=None,
+        ),
+        project_id="McpSandbox",
+        scene_name="TestLevel01",
+        scope="root_only",
+        limit=50,
+    )
+
+    validate_request_model("entity_list", request)
+
+
 def test_validate_request_model_rejects_invalid_component_request() -> None:
     request = EntityCreateRequest(
         meta=RequestMeta(
-            request_id="req-2011",
+            request_id="req-2013",
             tool_name="entity_create",
             dry_run=False,
-            approval_token="approved-2011",
+            approval_token="approved-2013",
             timestamp=None,
         ),
         project_id="McpSandbox",

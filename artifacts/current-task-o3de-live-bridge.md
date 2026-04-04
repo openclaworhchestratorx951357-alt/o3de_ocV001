@@ -5,7 +5,7 @@ Build the control artifacts that convert the proven six-tool live bridge into a 
 
 ## Right now
 - active artifact: `entity_list`
-- immediate next artifact: bridge-side typed request/response implementation and proof shape for `entity_list`
+- immediate next artifact: MCP exposure for `entity_list`
 
 ## Current execution requirements
 - narrow mutation layer is complete enough to count as finished for: `component_add`, `entity_rename`, `entity_set_transform`, `mesh_set_model_asset`
@@ -16,5 +16,5 @@ Build the control artifacts that convert the proven six-tool live bridge into a 
 - local pytest remains a non-blocking environment issue until the environment provides pytest
 
 ## After this file work
-Implement `entity_list` bridge-side request/response and proof shape.
+Advance from bridge-side `entity_list` implementation to MCP exposure.
 Do not stop at status-only updates.

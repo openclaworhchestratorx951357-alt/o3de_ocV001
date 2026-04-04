@@ -156,7 +156,7 @@
   - `entity_list`
 
 ## 11. entity_list
-- status: in progress
+- status: done
 - purpose: add the next adjacent read-only entity inspection slice after `entity_find`
 - done condition:
   - bridge-side typed request/response support exists
@@ -167,5 +167,18 @@
 - validation:
   - typed request validation is explicit
   - response shape is stable and reviewable
+  - `python3 -m compileall` succeeded across bridge source and tests
 - next follow-on:
   - MCP exposure for `entity_list`
+
+## 12. MCP exposure for entity_list
+- status: in progress
+- purpose: expose the completed bridge-side `entity_list` slice through the MCP layer without widening mutation surface
+- done condition:
+  - MCP registration exists for `entity_list`
+  - MCP routing preserves typed request/response shape
+  - read-only approval semantics remain explicit
+- validation:
+  - handler routing is deterministic and reviewable
+- next follow-on:
+  - next adjacent read-only entity inspection slice after `entity_list`

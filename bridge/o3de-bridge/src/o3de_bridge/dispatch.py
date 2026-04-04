@@ -32,6 +32,10 @@ from .models import (
     EntityFindResponse,
     EntityFindResultRecord,
     EntityGetData,
+    EntityListData,
+    EntityListRequest,
+    EntityListResponse,
+    EntityListResultRecord,
     EntityGetRequest,
     EntityGetResponse,
     EntityRecord,
@@ -73,6 +77,7 @@ DispatchRequest = (
     | BridgeHealthRequest
     | EntityGetRequest
     | EntityFindRequest
+    | EntityListRequest
     | AssetSearchRequest
     | AssetResolveRequest
     | ComponentAddRequest
@@ -332,6 +337,62 @@ def _handle_entity_find(request: EntityFindRequest) -> EntityFindResponse:
     )
 
 
+def _handle_entity_list(request: EntityListRequest) -> EntityListResponse:
+    """Deterministic inspection-only baseline handler for entity_list."""
+
+    base = _base_result("entity_list", request)
+    stub_entities = [
+        EntityListResultRecord(
+            entity_id="entity-001",
+            entity_name="root_entity",
+            scene_name=request.scene_name,
+            parent_entity_id=None,
+            depth=0,
+        ),
+        EntityListResultRecord(
+            entity_id="entity-002",
+            entity_name="child_camera",
+            scene_name=request.scene_name,
+            parent_entity_id="entity-001",
+            depth=1,
+        ),
+        EntityListResultRecord(
+            entity_id="entity-003",
+            entity_name="child_mesh",
+            scene_name=request.scene_name,
+            parent_entity_id="entity-001",
+            depth=1,
+        ),
+    ]
+
+    if request.scope == "root_only":
+        entities = [record for record in stub_entities if record.depth == 0]
+    elif request.scope == "children_only":
+        entities = [record for record in stub_entities if record.depth > 0]
+    else:
+        entities = stub_entities
+
+    entities = sorted(entities, key=lambda record: (record.depth, record.entity_name, record.entity_id))[: request.limit]
+
+    return EntityListResponse(
+        request_id=base["request_id"],
+        tool_name="entity_list",
+        ok=True,
+        data=EntityListData(
+            project_id=request.project_id,
+            scene_name=request.scene_name,
+            scope=request.scope,
+            total_entities=len(entities),
+            entities=entities,
+        ),
+        warnings=base["warnings"],
+        errors=base["errors"],
+        logs=base["logs"],
+        requires_approval=base["requires_approval"],
+        approval_level=base["approval_level"],
+    )
+
+
 def _handle_asset_search(request: AssetSearchRequest) -> AssetSearchResponse:
     """Deterministic inspection-only baseline handler for asset_search."""
 
@@ -569,6 +630,7 @@ _DISPATCH_HANDLERS: dict[str, DispatchHandler] = {
     "bridge_health": _handle_bridge_health,
     "entity_get": _handle_entity_get,
     "entity_find": _handle_entity_find,
+    "entity_list": _handle_entity_list,
     "asset_search": _handle_asset_search,
     "asset_resolve": _handle_asset_resolve,
     "component_add": _handle_component_add,

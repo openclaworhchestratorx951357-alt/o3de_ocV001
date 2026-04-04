@@ -6,6 +6,8 @@ from o3de_bridge.models import (
     EntityFindData,
     EntityFindQuery,
     EntityFindResultRecord,
+    EntityListData,
+    EntityListResultRecord,
     OperationResult,
     ProjectScanData,
     RequestMeta,
@@ -156,10 +158,41 @@ def test_entity_find_data_uses_typed_result_records() -> None:
     assert data.matches[1].entity_name == "test_entity_camera"
 
 
+def test_entity_list_data_uses_typed_result_records() -> None:
+    data = EntityListData(
+        project_id="McpSandbox",
+        scene_name="TestLevel01",
+        scope="scene",
+        total_entities=2,
+        entities=[
+            EntityListResultRecord(
+                entity_id="entity-001",
+                entity_name="root_entity",
+                scene_name="TestLevel01",
+                parent_entity_id=None,
+                depth=0,
+            ),
+            EntityListResultRecord(
+                entity_id="entity-002",
+                entity_name="child_camera",
+                scene_name="TestLevel01",
+                parent_entity_id="entity-001",
+                depth=1,
+            ),
+        ],
+    )
+
+    assert data.scope == "scene"
+    assert data.total_entities == 2
+    assert data.entities[0].entity_id == "entity-001"
+    assert data.entities[1].parent_entity_id == "entity-001"
+
+
 def test_approval_requirement_matches_expected_tools() -> None:
     assert get_approval_requirement("project_scan").requires_approval is False
     assert get_approval_requirement("scene_validate").requires_approval is False
     assert get_approval_requirement("entity_find").requires_approval is False
+    assert get_approval_requirement("entity_list").requires_approval is False
     assert get_approval_requirement("scene_open").requires_approval is True
     assert get_approval_requirement("scene_create").requires_approval is True
     assert get_approval_requirement("entity_create").requires_approval is True
