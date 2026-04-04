@@ -127,7 +127,7 @@
   - `entity_find`
 
 ## 9. entity_find
-- status: in progress
+- status: done
 - purpose: add safe typed entity lookup as the next smallest unblocked post-mutation expansion
 - done condition:
   - bridge-side typed request/response support exists
@@ -138,5 +138,18 @@
 - validation:
   - typed request validation is explicit
   - response shape is stable and reviewable
+  - `python3 -m compileall` succeeded across bridge source and tests
 - next follow-on:
   - MCP exposure for `entity_find` or next adjacent read-only entity inspection slice
+
+## 10. MCP exposure for entity_find
+- status: in progress
+- purpose: expose the completed bridge-side `entity_find` slice through the MCP layer without widening mutation surface
+- done condition:
+  - MCP registration exists for `entity_find`
+  - MCP routing preserves typed request/response shape
+  - read-only approval semantics remain explicit
+- validation:
+  - handler routing is deterministic and reviewable
+- next follow-on:
+  - next adjacent read-only entity inspection slice
