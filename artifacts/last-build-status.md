@@ -1,10 +1,10 @@
 # Last Build Status
 - program: O3DE MCP Build Program
 - current phase: next approved expansion after narrow mutation layer
-- latest completed step: MCP exposure for `entity_children` completed through registry wiring, server exposure, and deterministic MCP test coverage
-- current active artifact: `entity_parent`
-- current objective: begin bridge-side typed request/response support for `entity_parent`
-- next artifact after current: MCP exposure for `entity_parent`
+- latest completed step: bridge-side `entity_ancestors` proof coverage was added to model/validator tests to match the already-present typed implementation
+- current active artifact: `entity_ancestors`
+- current objective: finish status/queue advancement after `entity_ancestors` bridge-side implementation
+- next artifact after current: MCP exposure for `entity_ancestors`
 - local pytest remains a non-blocking environment issue: `python3 -m pytest ...` fails with `No module named pytest`
 - blocker: local environment issue — local pytest execution remains unavailable (`python3 -m pytest ...` fails with `No module named pytest`); `python3 -m compileall` succeeded across bridge source and tests, but pytest proof execution remains pending environment availability
 - operating rule: execute → verify → report

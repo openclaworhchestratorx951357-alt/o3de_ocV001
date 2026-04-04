@@ -3,6 +3,8 @@ from o3de_bridge.models import (
     ComponentSpec,
     EditorState,
     EntityCreateRequest,
+    EntityAncestorsData,
+    EntityAncestorsResultRecord,
     EntityChildrenData,
     EntityChildrenResultRecord,
     EntityFindData,
@@ -243,6 +245,36 @@ def test_entity_parent_data_uses_typed_result_record() -> None:
     assert data.parent.entity_id == "entity-001"
 
 
+def test_entity_ancestors_data_uses_typed_result_records() -> None:
+    data = EntityAncestorsData(
+        project_id="McpSandbox",
+        scene_name="TestLevel01",
+        child_entity_id="entity-003",
+        total_ancestors=2,
+        ancestors=[
+            EntityAncestorsResultRecord(
+                entity_id="entity-002",
+                entity_name="child_camera",
+                scene_name="TestLevel01",
+                parent_entity_id="entity-001",
+                depth=1,
+            ),
+            EntityAncestorsResultRecord(
+                entity_id="entity-001",
+                entity_name="root_entity",
+                scene_name="TestLevel01",
+                parent_entity_id=None,
+                depth=0,
+            ),
+        ],
+    )
+
+    assert data.child_entity_id == "entity-003"
+    assert data.total_ancestors == 2
+    assert data.ancestors[0].entity_id == "entity-002"
+    assert data.ancestors[1].entity_name == "root_entity"
+
+
 def test_approval_requirement_matches_expected_tools() -> None:
     assert get_approval_requirement("project_scan").requires_approval is False
     assert get_approval_requirement("scene_validate").requires_approval is False
@@ -250,6 +282,7 @@ def test_approval_requirement_matches_expected_tools() -> None:
     assert get_approval_requirement("entity_list").requires_approval is False
     assert get_approval_requirement("entity_children").requires_approval is False
     assert get_approval_requirement("entity_parent").requires_approval is False
+    assert get_approval_requirement("entity_ancestors").requires_approval is False
     assert get_approval_requirement("scene_open").requires_approval is True
     assert get_approval_requirement("scene_create").requires_approval is True
     assert get_approval_requirement("entity_create").requires_approval is True
