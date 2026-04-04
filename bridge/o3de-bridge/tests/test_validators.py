@@ -15,6 +15,7 @@ from o3de_bridge.models import (
     EntityChildrenRequest,
     EntityCreateRequest,
     EntityFindQuery,
+    EntityParentRequest,
     EntityFindRequest,
     EntityListRequest,
     ProjectScanRequest,
@@ -316,13 +317,30 @@ def test_validate_request_model_accepts_entity_children_with_parent_lookup() -> 
     validate_request_model("entity_children", request)
 
 
+def test_validate_request_model_accepts_entity_parent_with_child_lookup() -> None:
+    request = EntityParentRequest(
+        meta=RequestMeta(
+            request_id="req-2014",
+            tool_name="entity_parent",
+            dry_run=False,
+            approval_token=None,
+            timestamp=None,
+        ),
+        project_id="McpSandbox",
+        scene_name="TestLevel01",
+        child_entity_id="entity-002",
+    )
+
+    validate_request_model("entity_parent", request)
+
+
 def test_validate_request_model_rejects_invalid_component_request() -> None:
     request = EntityCreateRequest(
         meta=RequestMeta(
-            request_id="req-2014",
+            request_id="req-2015",
             tool_name="entity_create",
             dry_run=False,
-            approval_token="approved-2014",
+            approval_token="approved-2015",
             timestamp=None,
         ),
         project_id="McpSandbox",
