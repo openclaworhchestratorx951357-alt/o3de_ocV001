@@ -143,7 +143,7 @@
   - MCP exposure for `entity_find` or next adjacent read-only entity inspection slice
 
 ## 10. MCP exposure for entity_find
-- status: in progress
+- status: done
 - purpose: expose the completed bridge-side `entity_find` slice through the MCP layer without widening mutation surface
 - done condition:
   - MCP registration exists for `entity_find`
@@ -151,5 +151,21 @@
   - read-only approval semantics remain explicit
 - validation:
   - handler routing is deterministic and reviewable
+  - `python3 -m compileall` succeeded across MCP source and tests
 - next follow-on:
-  - next adjacent read-only entity inspection slice
+  - `entity_list`
+
+## 11. entity_list
+- status: in progress
+- purpose: add the next adjacent read-only entity inspection slice after `entity_find`
+- done condition:
+  - bridge-side typed request/response support exists
+  - stable identifiers remain primary in output
+  - deterministic ordering rules are explicit
+  - fail-closed validation exists for invalid scope values
+  - proof shape exists before MCP exposure
+- validation:
+  - typed request validation is explicit
+  - response shape is stable and reviewable
+- next follow-on:
+  - MCP exposure for `entity_list`

@@ -1,11 +1,11 @@
 # Last Build Status
 - program: O3DE MCP Build Program
 - current phase: next approved expansion after narrow mutation layer
-- latest completed step: bridge-side typed request/response and proof shape for `entity_find` were added to models, validators, dispatch, and tests
-- current active artifact: `entity_find`
-- current objective: finish status/queue advancement after `entity_find` bridge-side implementation
-- next artifact after current: MCP exposure for `entity_find` or next adjacent read-only entity inspection slice
+- latest completed step: MCP exposure for `entity_find` was completed in the server exposure list and server proof coverage
+- current active artifact: `MCP exposure for entity_find`
+- current objective: advance to the next adjacent read-only entity inspection slice
+- next artifact after current: `entity_list`
 - local pytest remains a non-blocking environment issue: `python3 -m pytest ...` fails with `No module named pytest`
-- blocker: local environment issue — local pytest execution remains unavailable (`python3 -m pytest ...` fails with `No module named pytest`); `python3 -m compileall` succeeded across bridge source and tests, but pytest proof execution remains pending environment availability
+- blocker: local environment issue — local pytest execution remains unavailable (`python3 -m pytest ...` fails with `No module named pytest`); `python3 -m compileall` succeeded across bridge source, MCP source, and tests, but pytest proof execution remains pending environment availability
 - operating rule: execute → verify → report
 - stop condition: do not stop at acknowledgement; only stop at completed artifact, exact blocker, or next artifact started
