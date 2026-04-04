@@ -15,6 +15,7 @@ from o3de_bridge.models import (
     EntityAncestorsRequest,
     EntityChildrenRequest,
     EntityCreateRequest,
+    EntityDescendantsRequest,
     EntityFindQuery,
     EntityParentRequest,
     EntityFindRequest,
@@ -353,13 +354,31 @@ def test_validate_request_model_accepts_entity_ancestors_with_child_lookup() -> 
     validate_request_model("entity_ancestors", request)
 
 
+def test_validate_request_model_accepts_entity_descendants_with_parent_lookup() -> None:
+    request = EntityDescendantsRequest(
+        meta=RequestMeta(
+            request_id="req-2018",
+            tool_name="entity_descendants",
+            dry_run=False,
+            approval_token=None,
+            timestamp=None,
+        ),
+        project_id="McpSandbox",
+        scene_name="TestLevel01",
+        parent_entity_id="entity-001",
+        limit=12,
+    )
+
+    validate_request_model("entity_descendants", request)
+
+
 def test_validate_request_model_rejects_invalid_component_request() -> None:
     request = EntityCreateRequest(
         meta=RequestMeta(
-            request_id="req-2017",
+            request_id="req-2019",
             tool_name="entity_create",
             dry_run=False,
-            approval_token="approved-2017",
+            approval_token="approved-2019",
             timestamp=None,
         ),
         project_id="McpSandbox",
