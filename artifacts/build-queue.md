@@ -52,13 +52,15 @@
   - bridge capability reporting implementation
 
 ## 3. bridge capability reporting implementation
-- status: in progress
+- status: done
 - purpose: implement runtime capability reporting in bridge code
 - done condition:
   - capability schema is represented in code
   - bridge can return typed capability data
 - validation:
   - output matches schema
+  - `build_baseline_capabilities` present and returns BridgeCapabilitiesData
+  - `python3 -m compileall` succeeded across bridge source and tests
 - next follow-on:
   - MCP registration for bridge_health and get_bridge_capabilities
 
@@ -288,7 +290,7 @@
   - MCP exposure for `entity_descendants`
 
 ## 20. MCP exposure for entity_descendants
-- status: in progress
+- status: done
 - purpose: expose the completed bridge-side `entity_descendants` slice through the MCP layer without widening mutation surface
 - done condition:
   - MCP registration exists for `entity_descendants`
@@ -296,5 +298,6 @@
   - read-only approval semantics remain explicit
 - validation:
   - handler routing is deterministic and reviewable
+  - deterministic registry/server tests exist for `entity_descendants`
 - next follow-on:
-  - next adjacent read-only entity inspection slice after `entity_descendants`
+  - `entity_siblings`
