@@ -27,6 +27,7 @@ _TOOL_APPROVAL_LEVELS: dict[str, ApprovalLevel] = {
     "entity_get": ApprovalLevel.NONE,
     "entity_find": ApprovalLevel.NONE,
     "entity_list": ApprovalLevel.NONE,
+    "entity_children": ApprovalLevel.NONE,
     "asset_search": ApprovalLevel.NONE,
     "asset_resolve": ApprovalLevel.NONE,
     "component_add": ApprovalLevel.CONFIRM,

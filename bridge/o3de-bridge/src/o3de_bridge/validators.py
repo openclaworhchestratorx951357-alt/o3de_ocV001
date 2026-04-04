@@ -22,6 +22,7 @@ from .models import (
     BridgeHealthRequest,
     ComponentAddRequest,
     ComponentSpec,
+    EntityChildrenRequest,
     EntityCreateRequest,
     EntityFindRequest,
     EntityGetRequest,
@@ -51,6 +52,7 @@ _ALLOWED_REQUEST_TYPES: dict[str, type] = {
     "entity_get": EntityGetRequest,
     "entity_find": EntityFindRequest,
     "entity_list": EntityListRequest,
+    "entity_children": EntityChildrenRequest,
     "asset_search": AssetSearchRequest,
     "asset_resolve": AssetResolveRequest,
     "component_add": ComponentAddRequest,
@@ -208,6 +210,21 @@ def validate_entity_list_request(request_model: EntityListRequest) -> None:
             code=INVALID_REQUEST,
             message=f"Unsupported scope: {request_model.scope}",
             target="scope",
+        )
+
+
+def validate_entity_children_request(request_model: EntityChildrenRequest) -> None:
+    """Validate entity_children specific request requirements."""
+
+    validate_request_meta(request_model.meta)
+    validate_project_id(request_model.project_id)
+    if request_model.scene_name is not None:
+        validate_scene_name(request_model.scene_name)
+    if not request_model.parent_entity_id.strip():
+        raise BridgeValidationError(
+            code=INVALID_REQUEST,
+            message="parent_entity_id must be a non-empty string.",
+            target="parent_entity_id",
         )
 
 
@@ -374,6 +391,10 @@ def validate_request_model(tool_name: str, request_model: Any) -> None:
 
     if tool_name == "entity_list":
         validate_entity_list_request(request_model)
+        return
+
+    if tool_name == "entity_children":
+        validate_entity_children_request(request_model)
         return
 
     if tool_name == "asset_search":

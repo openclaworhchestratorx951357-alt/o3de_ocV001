@@ -25,6 +25,10 @@ from .models import (
     ComponentAddResponse,
     EditorState,
     EntityComponentSummary,
+    EntityChildrenData,
+    EntityChildrenRequest,
+    EntityChildrenResponse,
+    EntityChildrenResultRecord,
     EntityCreateData,
     EntityCreateRequest,
     EntityFindData,
@@ -78,6 +82,7 @@ DispatchRequest = (
     | EntityGetRequest
     | EntityFindRequest
     | EntityListRequest
+    | EntityChildrenRequest
     | AssetSearchRequest
     | AssetResolveRequest
     | ComponentAddRequest
@@ -393,6 +398,47 @@ def _handle_entity_list(request: EntityListRequest) -> EntityListResponse:
     )
 
 
+def _handle_entity_children(request: EntityChildrenRequest) -> EntityChildrenResponse:
+    """Deterministic inspection-only baseline handler for entity_children."""
+
+    base = _base_result("entity_children", request)
+    children = [
+        EntityChildrenResultRecord(
+            entity_id="entity-002",
+            entity_name="child_camera",
+            scene_name=request.scene_name,
+            parent_entity_id=request.parent_entity_id,
+            depth_from_parent=1,
+        ),
+        EntityChildrenResultRecord(
+            entity_id="entity-003",
+            entity_name="child_mesh",
+            scene_name=request.scene_name,
+            parent_entity_id=request.parent_entity_id,
+            depth_from_parent=1,
+        ),
+    ]
+    children = sorted(children, key=lambda record: (record.entity_name, record.entity_id))[: request.limit]
+
+    return EntityChildrenResponse(
+        request_id=base["request_id"],
+        tool_name="entity_children",
+        ok=True,
+        data=EntityChildrenData(
+            project_id=request.project_id,
+            scene_name=request.scene_name,
+            parent_entity_id=request.parent_entity_id,
+            total_children=len(children),
+            children=children,
+        ),
+        warnings=base["warnings"],
+        errors=base["errors"],
+        logs=base["logs"],
+        requires_approval=base["requires_approval"],
+        approval_level=base["approval_level"],
+    )
+
+
 def _handle_asset_search(request: AssetSearchRequest) -> AssetSearchResponse:
     """Deterministic inspection-only baseline handler for asset_search."""
 
@@ -631,6 +677,7 @@ _DISPATCH_HANDLERS: dict[str, DispatchHandler] = {
     "entity_get": _handle_entity_get,
     "entity_find": _handle_entity_find,
     "entity_list": _handle_entity_list,
+    "entity_children": _handle_entity_children,
     "asset_search": _handle_asset_search,
     "asset_resolve": _handle_asset_resolve,
     "component_add": _handle_component_add,

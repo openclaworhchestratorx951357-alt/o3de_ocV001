@@ -172,7 +172,7 @@
   - MCP exposure for `entity_list`
 
 ## 12. MCP exposure for entity_list
-- status: in progress
+- status: done
 - purpose: expose the completed bridge-side `entity_list` slice through the MCP layer without widening mutation surface
 - done condition:
   - MCP registration exists for `entity_list`
@@ -180,5 +180,34 @@
   - read-only approval semantics remain explicit
 - validation:
   - handler routing is deterministic and reviewable
+  - deterministic registry/server tests exist for `entity_list`
 - next follow-on:
-  - next adjacent read-only entity inspection slice after `entity_list`
+  - `entity_children`
+
+## 13. entity_children
+- status: done
+- purpose: add the next adjacent read-only entity inspection slice after `entity_list`
+- done condition:
+  - bridge-side typed request/response support exists
+  - stable identifiers remain primary in output
+  - parent/child relationship output is explicit and typed
+  - fail-closed validation exists for missing parent lookup input
+  - proof shape exists before MCP exposure
+- validation:
+  - typed request validation is explicit
+  - response shape is stable and reviewable
+  - `python3 -m compileall` succeeded across bridge source and tests
+- next follow-on:
+  - MCP exposure for `entity_children`
+
+## 14. MCP exposure for entity_children
+- status: in progress
+- purpose: expose the completed bridge-side `entity_children` slice through the MCP layer without widening mutation surface
+- done condition:
+  - MCP registration exists for `entity_children`
+  - MCP routing preserves typed request/response shape
+  - read-only approval semantics remain explicit
+- validation:
+  - handler routing is deterministic and reviewable
+- next follow-on:
+  - next adjacent read-only entity inspection slice after `entity_children`

@@ -3,6 +3,8 @@ from o3de_bridge.models import (
     ComponentSpec,
     EditorState,
     EntityCreateRequest,
+    EntityChildrenData,
+    EntityChildrenResultRecord,
     EntityFindData,
     EntityFindQuery,
     EntityFindResultRecord,
@@ -188,11 +190,42 @@ def test_entity_list_data_uses_typed_result_records() -> None:
     assert data.entities[1].parent_entity_id == "entity-001"
 
 
+def test_entity_children_data_uses_typed_result_records() -> None:
+    data = EntityChildrenData(
+        project_id="McpSandbox",
+        scene_name="TestLevel01",
+        parent_entity_id="entity-001",
+        total_children=2,
+        children=[
+            EntityChildrenResultRecord(
+                entity_id="entity-002",
+                entity_name="child_camera",
+                scene_name="TestLevel01",
+                parent_entity_id="entity-001",
+                depth_from_parent=1,
+            ),
+            EntityChildrenResultRecord(
+                entity_id="entity-003",
+                entity_name="child_mesh",
+                scene_name="TestLevel01",
+                parent_entity_id="entity-001",
+                depth_from_parent=1,
+            ),
+        ],
+    )
+
+    assert data.parent_entity_id == "entity-001"
+    assert data.total_children == 2
+    assert data.children[0].entity_id == "entity-002"
+    assert data.children[1].depth_from_parent == 1
+
+
 def test_approval_requirement_matches_expected_tools() -> None:
     assert get_approval_requirement("project_scan").requires_approval is False
     assert get_approval_requirement("scene_validate").requires_approval is False
     assert get_approval_requirement("entity_find").requires_approval is False
     assert get_approval_requirement("entity_list").requires_approval is False
+    assert get_approval_requirement("entity_children").requires_approval is False
     assert get_approval_requirement("scene_open").requires_approval is True
     assert get_approval_requirement("scene_create").requires_approval is True
     assert get_approval_requirement("entity_create").requires_approval is True
