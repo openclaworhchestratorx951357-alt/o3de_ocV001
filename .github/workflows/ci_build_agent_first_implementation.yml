@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Create smoke artifact
         run: |
@@ -17,7 +17,7 @@ jobs:
           echo "run_at: $(date -u)" >> smoke.txt
 
       - name: Upload smoke artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v6
         with:
           name: ci_build_agent_first_impl_smoke
           path: smoke.txt
