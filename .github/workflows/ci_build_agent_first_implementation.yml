@@ -1,0 +1,23 @@
+name: CI Build Agent — First Implementation
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  smoke:
+    name: smoke
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create smoke artifact
+        run: |
+          echo "ci_build_agent_first_implementation smoke test" > smoke.txt
+          echo "run_at: $(date -u)" >> smoke.txt
+
+      - name: Upload smoke artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci_build_agent_first_impl_smoke
+          path: smoke.txt
